@@ -23,6 +23,13 @@ const ALL_GIFS = [
   { id: "26736073", title: "Tom And Jerry 2", ratio: "1.18081", caption: "when meds dont taste good" },
   { id: "5701243", title: "Bleh tongue out", ratio: "1", caption: "vrinda after taking meds" },
   { id: "14423142", title: "What Oh No", ratio: "1.87135", caption: "when vanshika reminds her again" },
+  { id: "5548305913688933089", title: "Cartoon cleanup", ratio: "1", caption: "vrinda cleaning up after meds" },
+  { id: "2674012126159186251", title: "Hello Kitty bottle", ratio: "1.33333", caption: "hello kitty taking her vitamins" },
+  { id: "3559269868840942104", title: "Cute cat", ratio: "1", caption: "vrinda on a good day" },
+  { id: "16011534249941914272", title: "Snoopy laughing", ratio: "1.11111", caption: "vrinda laughing at vanshika" },
+  { id: "4905940264623439101", title: "Aaravtech sticker", ratio: "1.20874", caption: "aarav energy" },
+  { id: "20341014", title: "Tom Jerry funny face", ratio: "1.19403", caption: "that face when meds r actually okay" },
+  { id: "13841189201837745067", title: "Meme", ratio: "1.07843", caption: "vrinda's daily mood" },
 ];
 
 // Fisher-Yates shuffle (seeded by day to be consistent per day)
