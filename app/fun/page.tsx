@@ -5,6 +5,7 @@ import {
   IndolentAnimation,
   LazyPandaAnimation,
 } from "@/components/animations";
+import { TenorGifGrid } from "@/components/tenor-gifs";
 
 const characters = [
   {
@@ -120,6 +121,17 @@ export default function FunPage() {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* GIF section */}
+      <div className="mt-6">
+        <div className="mb-3">
+          <h2 className="font-display font-semibold text-xl text-[#1e1040]">GIF Gallery</h2>
+          <p className="text-sm font-medium mt-0.5" style={{ color: "#a78bfa" }}>
+            a new shuffle every day
+          </p>
+        </div>
+        <TenorGifGrid />
       </div>
 
       {/* Footer note */}
