@@ -6,7 +6,11 @@
       "Bash(npm run:*)",
       "mcp__plugin_vercel_vercel__deploy_to_vercel",
       "Bash(ls E:/medicine-tracker/public/*.json)",
-      "Bash(xargs -I{} basename {})"
+      "Bash(xargs -I{} basename {})",
+      "mcp__plugin_vercel_vercel__list_teams",
+      "mcp__plugin_vercel_vercel__list_deployments",
+      "mcp__plugin_vercel_vercel__get_deployment_build_logs",
+      "mcp__plugin_vercel_vercel__get_project"
     ]
   }
 }
