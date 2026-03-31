@@ -4,7 +4,9 @@
       "Bash(gh auth:*)",
       "Bash(npm install:*)",
       "Bash(npm run:*)",
-      "mcp__plugin_vercel_vercel__deploy_to_vercel"
+      "mcp__plugin_vercel_vercel__deploy_to_vercel",
+      "Bash(ls E:/medicine-tracker/public/*.json)",
+      "Bash(xargs -I{} basename {})"
     ]
   }
 }

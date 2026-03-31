@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Pill, ClipboardList, History } from "lucide-react";
+import { Pill, ClipboardList, History, Sparkles } from "lucide-react";
 
 const tabs = [
   { href: "/", label: "Today", Icon: Pill },
   { href: "/medicines", label: "Meds", Icon: ClipboardList },
   { href: "/history", label: "History", Icon: History },
+  { href: "/fun", label: "Fun", Icon: Sparkles },
 ];
 
 export function BottomNav() {
@@ -18,6 +19,7 @@ export function BottomNav() {
       <div className="flex max-w-md mx-auto py-1">
         {tabs.map(({ href, label, Icon }) => {
           const isActive = href === "/" ? pathname === "/" : pathname.startsWith(href);
+          const isFun = href === "/fun";
           return (
             <Link
               key={href}
@@ -25,16 +27,22 @@ export function BottomNav() {
               className="flex-1 flex flex-col items-center gap-1 py-2"
             >
               <div
-                className={`flex flex-col items-center gap-1 px-5 py-2 rounded-2xl transition-all ${
+                className={`flex flex-col items-center gap-1 px-3 py-2 rounded-2xl transition-all ${
                   isActive
-                    ? "bg-purple-100 text-[#7C5CFF]"
+                    ? isFun
+                      ? "bg-pink-100 text-[#FF7EB6]"
+                      : "bg-purple-100 text-[#7C5CFF]"
                     : "text-gray-400 hover:text-purple-400"
                 }`}
               >
-                <Icon size={22} strokeWidth={isActive ? 2.5 : 1.8} />
+                <Icon size={20} strokeWidth={isActive ? 2.5 : 1.8} />
                 <span
                   className={`text-xs font-semibold transition-all font-display ${
-                    isActive ? "text-[#7C5CFF]" : "text-gray-400"
+                    isActive
+                      ? isFun
+                        ? "text-[#FF7EB6]"
+                        : "text-[#7C5CFF]"
+                      : "text-gray-400"
                   }`}
                 >
                   {label}
