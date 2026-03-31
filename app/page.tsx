@@ -31,7 +31,8 @@ export default async function TodayPage() {
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 
-  const today = new Date().toISOString().split("T")[0];
+  // Use IST date to avoid UTC day mismatch for Indian users
+  const today = new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" });
 
   const [{ data: medicines }, { data: logs }] = await Promise.all([
     supabase.from("medicines").select("*").eq("active", true).order("name"),
@@ -105,7 +106,12 @@ export default async function TodayPage() {
         }}>
           {greeting},
         </h1>
-        <h1 className="text-4xl font-display font-semibold text-[#1e1040] leading-tight">
+        <h1 className="text-4xl font-display font-semibold leading-tight" style={{
+          background: "linear-gradient(135deg, #FF7EB6 0%, #c77dff 100%)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          backgroundClip: "text",
+        }}>
           Vrinda!
         </h1>
       </div>

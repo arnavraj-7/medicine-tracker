@@ -67,7 +67,7 @@ export async function logIntake(
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 
-  const today = new Date().toISOString().split("T")[0];
+  const today = getISTDateString();
 
   const { error } = await supabase.from("intake_logs").insert({
     medicine_id: medicineId,
@@ -82,11 +82,16 @@ export async function logIntake(
   revalidatePath("/history");
 }
 
+// Get today's date in IST (Asia/Kolkata, UTC+5:30) — avoids UTC date mismatch for Indian users
+function getISTDateString() {
+  return new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" });
+}
+
 export async function addQuickLog(text: string) {
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 
-  const today = new Date().toISOString().split("T")[0];
+  const today = getISTDateString();
 
   const { error } = await supabase.from("intake_logs").insert({
     medicine_id: null,

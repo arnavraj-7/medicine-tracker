@@ -12,14 +12,16 @@ const colorDot: Record<string, string> = {
 };
 
 function formatDate(dateStr: string) {
-  const date = new Date(dateStr + "T00:00:00");
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const yesterday = new Date(today);
-  yesterday.setDate(yesterday.getDate() - 1);
+  // Compare using IST date strings to avoid UTC offset issues
+  const todayIST = new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" });
+  const yesterdayDate = new Date();
+  yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+  const yesterdayIST = yesterdayDate.toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" });
 
-  if (date.getTime() === today.getTime()) return "Today";
-  if (date.getTime() === yesterday.getTime()) return "Yesterday";
+  if (dateStr === todayIST) return "Today";
+  if (dateStr === yesterdayIST) return "Yesterday";
+
+  const date = new Date(dateStr + "T00:00:00");
   return date.toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "long" });
 }
 
