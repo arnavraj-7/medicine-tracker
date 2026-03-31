@@ -16,7 +16,7 @@ export function DeleteMedicineButton({ id, name }: { id: string; name: string })
     <button
       onClick={handleDelete}
       disabled={isPending}
-      className="text-red-300 hover:text-red-500 hover:bg-red-50 p-1.5 rounded-lg transition-colors disabled:opacity-50"
+      className="p-2 rounded-xl border-2 border-red-100 bg-red-50 text-red-400 hover:bg-red-100 hover:text-red-600 transition-colors disabled:opacity-50"
       title="Delete medicine"
     >
       {isPending ? (

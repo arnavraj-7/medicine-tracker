@@ -1,18 +1,70 @@
 @import "tailwindcss";
 
-:root {
-  --background: #fdf4ff;
-  --foreground: #2d1b3d;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-fredoka);
+  --font-mono: monospace;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: linear-gradient(160deg, #ede9fe 0%, #fce7f3 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  color: #1e1040;
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+h1, h2, h3, .font-display {
+  font-family: var(--font-fredoka), system-ui, sans-serif;
+}
+
+/* Card */
+.card {
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 8px 24px rgba(124, 92, 255, 0.1);
+  border: 1.5px solid rgba(124, 92, 255, 0.1);
+}
+
+/* Cartoon press buttons */
+.btn-primary {
+  background: #7C5CFF;
+  color: white;
+  border-radius: 16px;
+  font-weight: 700;
+  font-family: var(--font-fredoka), sans-serif;
+  letter-spacing: 0.02em;
+  border-bottom: 4px solid #5a3dd8;
+  transition: all 0.1s ease;
+}
+.btn-primary:active {
+  transform: translateY(3px);
+  border-bottom-width: 1px;
+}
+
+.btn-pink {
+  background: #FF7EB6;
+  color: white;
+  border-radius: 16px;
+  font-weight: 700;
+  font-family: var(--font-fredoka), sans-serif;
+  letter-spacing: 0.02em;
+  border-bottom: 4px solid #e0508e;
+  transition: all 0.1s ease;
+}
+.btn-pink:active {
+  transform: translateY(3px);
+  border-bottom-width: 1px;
+}
+
+.btn-ghost {
+  background: #f3f0ff;
+  color: #7C5CFF;
+  border-radius: 14px;
+  font-weight: 600;
+  border: 1.5px solid #ddd6fe;
+  transition: all 0.1s ease;
+}
+.btn-ghost:active {
+  transform: translateY(1px);
 }

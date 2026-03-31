@@ -1,12 +1,21 @@
 import type { Metadata, Viewport } from "next";
-import { Geist } from "next/font/google";
+import { Fredoka, Inter } from "next/font/google";
 import "./globals.css";
 import { BottomNav } from "@/components/bottom-nav";
 
-const geist = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
+const fredoka = Fredoka({
+  variable: "--font-fredoka",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+});
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
-  title: "Vrinda's Medicines 💊",
+  title: "Vrinda's Medicines",
   description: "Track your daily medicines — stay healthy!",
 };
 
@@ -20,8 +29,8 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${geist.variable} h-full`}>
-      <body className="min-h-full flex flex-col bg-[#fdf4ff] font-sans antialiased">
+    <html lang="en" className={`${fredoka.variable} ${inter.variable} h-full`}>
+      <body className="min-h-full flex flex-col font-sans antialiased">
         <main className="flex-1 pb-24">{children}</main>
         <BottomNav />
       </body>

@@ -23,20 +23,20 @@ export function QuickLogInput() {
       <input
         ref={inputRef}
         type="text"
-        placeholder="morning done, lunch wali li, ..."
-        className="flex-1 rounded-xl border border-violet-200 bg-white px-4 py-2.5 text-sm text-gray-700 placeholder:text-gray-300 focus:outline-none focus:ring-2 focus:ring-violet-300 transition"
+        placeholder="Took morning dose, lunch wali li..."
+        className="flex-1 rounded-2xl border-2 border-purple-200 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 placeholder:text-gray-300 focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100 transition"
         disabled={isPending}
       />
       <button
         type="submit"
         disabled={isPending}
-        className="bg-violet-400 hover:bg-violet-500 active:scale-95 text-white text-sm font-semibold px-4 py-2.5 rounded-xl disabled:opacity-50 transition-all flex-shrink-0 flex items-center gap-1.5"
+        className="btn-primary px-4 py-2.5 text-sm disabled:opacity-50 flex-shrink-0 flex items-center gap-1.5"
       >
         {isPending ? (
-          <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+          <span className="w-4 h-4 border-2 border-purple-200 border-t-white rounded-full animate-spin" />
         ) : (
           <>
-            <PenLine size={14} />
+            <PenLine size={14} strokeWidth={2.5} />
             Log
           </>
         )}
