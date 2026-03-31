@@ -83,12 +83,13 @@ export default async function TodayPage() {
   const allDone = totalMeds > 0 && fullyDoneCount === totalMeds;
 
   const now = new Date();
-  const hour = now.getHours();
+  const hour = parseInt(now.toLocaleString("en-US", { timeZone: "Asia/Kolkata", hour: "numeric", hour12: false }));
   const greeting = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
-  const dateStr = now.toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "long" });
+  const dateStr = now.toLocaleDateString("en-IN", { timeZone: "Asia/Kolkata", weekday: "long", day: "numeric", month: "long" });
 
+  const istDate = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
   const dayOfYear = Math.floor(
-    (now.getTime() - new Date(now.getFullYear(), 0, 0).getTime()) / 86400000
+    (istDate.getTime() - new Date(istDate.getFullYear(), 0, 0).getTime()) / 86400000
   );
   const quote = QUOTES[dayOfYear % QUOTES.length];
 
