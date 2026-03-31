@@ -22,7 +22,7 @@ const characters = [
   {
     Animation: SnorlaxAnimation,
     name: "Dreaming Snorlax",
-    vibe: "vrinda before taking meds",
+    vibe: "uuuu uuuu wale dreamssss",
     size: 180,
     bg: "from-blue-50 to-indigo-50",
     border: "border-blue-200",
