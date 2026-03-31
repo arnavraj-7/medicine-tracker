@@ -24,7 +24,8 @@ export function QuickLogInput() {
         ref={inputRef}
         type="text"
         placeholder="Took morning dose, lunch wali li..."
-        className="flex-1 rounded-2xl border-2 border-purple-200 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 placeholder:text-gray-300 focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100 transition"
+        className="flex-1 input-cartoon"
+        style={{ paddingTop: "10px", paddingBottom: "10px" }}
         disabled={isPending}
       />
       <button

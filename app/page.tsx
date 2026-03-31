@@ -3,7 +3,7 @@ import Link from "next/link";
 import { createClient } from "@/utils/supabase/server";
 import { TakeButton, UndoButton } from "@/components/intake-buttons";
 import { QuickLogInput } from "@/components/quick-log-input";
-import { TrophyAnimation, SnorlaxAnimation } from "@/components/animations";
+import { TrophyAnimation, LazyPandaAnimation } from "@/components/animations";
 
 const colorMap: Record<string, { dot: string; bar: string; badge: string }> = {
   pink:   { dot: "bg-pink-400",   bar: "bg-pink-400",   badge: "bg-pink-50 text-pink-600 border-pink-200" },
@@ -54,10 +54,32 @@ export default async function TodayPage() {
     }
   }
 
+  const freqRequired: Record<string, number> = {
+    once_daily: 1,
+    twice_daily: 2,
+    three_times_daily: 3,
+    as_needed: 0, // unlimited
+  };
+
   const totalMeds = medicines?.length ?? 0;
-  const takenCount = Object.keys(takenMap).length;
-  const progress = totalMeds > 0 ? Math.round((takenCount / totalMeds) * 100) : 0;
-  const allDone = totalMeds > 0 && takenCount === totalMeds;
+  // A medicine counts as "fully done" when takenLogs >= required (or at least 1 for as_needed)
+  const fullyDoneCount = (medicines ?? []).filter((med) => {
+    const required = freqRequired[med.frequency] ?? 1;
+    const taken = (takenMap[med.id] ?? []).length;
+    return required === 0 ? taken > 0 : taken >= required;
+  }).length;
+  // For progress bar: count total required doses vs taken doses
+  const totalRequired = (medicines ?? []).reduce((sum, med) => {
+    const r = freqRequired[med.frequency] ?? 1;
+    return sum + (r === 0 ? 1 : r);
+  }, 0);
+  const totalTaken = (medicines ?? []).reduce((sum, med) => {
+    const r = freqRequired[med.frequency] ?? 1;
+    const taken = (takenMap[med.id] ?? []).length;
+    return sum + Math.min(taken, r === 0 ? taken : r);
+  }, 0);
+  const progress = totalRequired > 0 ? Math.round((totalTaken / totalRequired) * 100) : 0;
+  const allDone = totalMeds > 0 && fullyDoneCount === totalMeds;
 
   const now = new Date();
   const hour = now.getHours();
@@ -74,9 +96,17 @@ export default async function TodayPage() {
 
       {/* Header */}
       <div className="mb-4">
-        <p className="text-sm font-semibold text-purple-400">{dateStr}</p>
-        <h1 className="text-3xl font-display font-semibold text-[#1e1040] leading-tight mt-0.5">
-          {greeting}, Vrinda! 👋
+        <p className="text-xs font-semibold text-purple-400 uppercase tracking-widest">{dateStr}</p>
+        <h1 className="text-4xl font-display font-semibold leading-tight mt-1" style={{
+          background: "linear-gradient(135deg, #7C5CFF 0%, #FF7EB6 100%)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          backgroundClip: "text",
+        }}>
+          {greeting},
+        </h1>
+        <h1 className="text-4xl font-display font-semibold text-[#1e1040] leading-tight">
+          Vrinda!
         </h1>
       </div>
 
@@ -105,7 +135,7 @@ export default async function TodayPage() {
               <div className="flex justify-between items-center mb-2.5">
                 <span className="text-sm font-semibold text-gray-500">Today&apos;s progress</span>
                 <span className="text-sm font-display font-semibold text-purple-600">
-                  {takenCount} of {totalMeds}
+                  {totalTaken}/{totalRequired} doses
                 </span>
               </div>
               <div className="w-full bg-purple-100 rounded-full h-3">
@@ -126,7 +156,7 @@ export default async function TodayPage() {
       {!medicines?.length ? (
         <div className="text-center py-4">
           <div className="flex justify-center">
-            <SnorlaxAnimation size={200} />
+            <LazyPandaAnimation size={200} />
           </div>
           <p className="font-display font-semibold text-xl text-[#1e1040] mt-1">
             No meds yet
@@ -145,55 +175,71 @@ export default async function TodayPage() {
         <div className="space-y-3">
           {medicines.map((med) => {
             const takenLogs = takenMap[med.id] ?? [];
-            const isTaken = takenLogs.length > 0;
+            const required = freqRequired[med.frequency] ?? 1;
+            const isUnlimited = required === 0;
+            const takenSoFar = takenLogs.length;
+            const isFullyDone = isUnlimited ? false : takenSoFar >= required;
             const c = colorMap[med.color] ?? colorMap.pink;
 
             return (
               <div
                 key={med.id}
-                className={`card overflow-hidden flex transition-all ${isTaken ? "opacity-60" : ""}`}
+                className={`card overflow-hidden flex transition-all ${isFullyDone ? "opacity-60" : ""}`}
               >
                 <div className={`w-1.5 flex-shrink-0 ${c.bar}`} />
                 <div className="flex-1 p-4 flex items-center justify-between gap-3">
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2.5">
+                    <div className="flex items-center gap-2 flex-wrap">
                       <span className={`w-3 h-3 rounded-full flex-shrink-0 ${c.dot}`} />
                       <span
                         className={`font-display font-semibold text-[#1e1040] truncate ${
-                          isTaken ? "line-through text-gray-400" : ""
+                          isFullyDone ? "line-through text-gray-400" : ""
                         }`}
                       >
                         {med.name}
                       </span>
-                      {med.dosage && (
-                        <span className={`hidden sm:inline text-xs font-medium px-2 py-0.5 rounded-full border ${c.badge}`}>
-                          {med.dosage}
+                      {/* Dose counter pill */}
+                      {!isUnlimited && required > 1 && (
+                        <span className={`text-xs font-bold px-2 py-0.5 rounded-full border ${
+                          isFullyDone
+                            ? "bg-green-50 text-green-600 border-green-200"
+                            : c.badge
+                        }`}>
+                          {takenSoFar}/{required}
+                        </span>
+                      )}
+                      {isUnlimited && takenSoFar > 0 && (
+                        <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-green-50 text-green-600 border border-green-200">
+                          ×{takenSoFar}
                         </span>
                       )}
                     </div>
                     {med.dosage && (
-                      <p className="text-xs text-gray-400 font-medium mt-0.5 ml-5 sm:hidden">
-                        {med.dosage}
-                      </p>
+                      <p className="text-xs text-gray-400 font-medium mt-0.5 ml-5">{med.dosage}</p>
                     )}
                     {med.notes && (
                       <p className="text-xs text-gray-400 italic mt-0.5 ml-5">{med.notes}</p>
                     )}
-                    {isTaken && takenLogs[0] && (
-                      <p className="text-xs text-green-600 font-semibold mt-1 ml-5">
-                        Taken at{" "}
-                        {new Date(takenLogs[0].taken_at).toLocaleTimeString("en-IN", {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })}
-                      </p>
+                    {takenLogs.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5 mt-1 ml-5">
+                        {takenLogs.slice().reverse().map((log, i) => (
+                          <span key={log.id} className="text-xs text-green-600 font-semibold">
+                            {i === 0 ? "" : "· "}
+                            {new Date(log.taken_at).toLocaleTimeString("en-IN", {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            })}
+                          </span>
+                        ))}
+                      </div>
                     )}
                   </div>
-                  <div className="flex-shrink-0">
-                    {isTaken ? (
-                      <UndoButton logId={takenLogs[0].id} />
-                    ) : (
+                  <div className="flex-shrink-0 flex flex-col gap-1.5 items-end">
+                    {!isFullyDone && (
                       <TakeButton medicineId={med.id} medicineName={med.name} dosage={med.dosage} />
+                    )}
+                    {takenLogs.length > 0 && (
+                      <UndoButton logId={takenLogs[0].id} />
                     )}
                   </div>
                 </div>

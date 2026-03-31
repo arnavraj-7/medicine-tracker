@@ -3,7 +3,7 @@ import { Plus, Pencil } from "lucide-react";
 import { cookies } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
 import { DeleteMedicineButton } from "@/components/delete-medicine-button";
-import { IndolentAnimation } from "@/components/animations";
+import { SnorlaxAnimation } from "@/components/animations";
 
 const colorDot: Record<string, string> = {
   pink:   "bg-pink-400",
@@ -46,7 +46,7 @@ export default async function MedicinesPage() {
       {!medicines?.length ? (
         <div className="text-center py-4">
           <div className="flex justify-center">
-            <IndolentAnimation size={200} />
+            <SnorlaxAnimation size={200} />
           </div>
           <p className="font-display font-semibold text-xl text-[#1e1040] mt-1">
             No medicines added yet

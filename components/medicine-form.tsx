@@ -49,7 +49,7 @@ export function MedicineForm({ action, defaultValues, submitLabel = "Save Medici
           required
           defaultValue={defaultValues?.name}
           placeholder="e.g. Vitamin D, Paracetamol..."
-          className="w-full rounded-2xl border-2 border-purple-100 bg-white px-4 py-3 text-sm text-gray-800 placeholder:text-gray-300 focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100 transition"
+          className="input-cartoon"
         />
       </div>
 
@@ -63,7 +63,7 @@ export function MedicineForm({ action, defaultValues, submitLabel = "Save Medici
           name="dosage"
           defaultValue={defaultValues?.dosage ?? ""}
           placeholder="e.g. 500mg, 1 tablet, 2 drops..."
-          className="w-full rounded-2xl border-2 border-purple-100 bg-white px-4 py-3 text-sm text-gray-800 placeholder:text-gray-300 focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100 transition"
+          className="input-cartoon"
         />
       </div>
 
