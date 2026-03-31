@@ -19,7 +19,7 @@ const ALL_GIFS = [
   { id: "11621016293007281394", title: "Rexx meme", ratio: "1.07328", caption: "alasi panda energy" },
   { id: "21049112", title: "Bart Simpson dance", ratio: "1.33891", caption: "vrinda doing literally nothing" },
   { id: "8881886906064729601", title: "Tom & Jerry chaos", ratio: "1.5", caption: "medicine time energy" },
-  { id: "26736081", title: "Tom And Jerry", ratio: "1.03896", caption: "vrinda vs the medicine" },
+  { id: "26736081", title: "Tom And Jerry", ratio: "1.03896", caption: "vrinda when no meds are to be taken" },
   { id: "26736073", title: "Tom And Jerry 2", ratio: "1.18081", caption: "when meds dont taste good" },
   { id: "5701243", title: "Bleh tongue out", ratio: "1", caption: "vrinda after taking meds" },
   { id: "14423142", title: "What Oh No", ratio: "1.87135", caption: "when vanshika reminds her again" },
@@ -81,7 +81,7 @@ export function TenorGifGrid() {
                 </a>
               </div>
               <div className="px-3 py-2 bg-white">
-                <p className="text-xs font-semibold text-purple-600 italic truncate">
+                <p className="text-xs font-semibold text-purple-600 italic leading-tight">
                   {gif.caption}
                 </p>
               </div>
